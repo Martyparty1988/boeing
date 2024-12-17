@@ -192,6 +192,52 @@
                 <label>Jack s colou (99 Kč)</label>
                 <input type="number" id="jack-s-colou" placeholder="">
             </div>
+            <div class="form-group">
+                <label>Moscow Mule (99 Kč)</label>
+                <input type="number" id="moscow-mule" placeholder="">
+            </div>
+            <div class="form-group">
+                <label>Gin-Tonic (99 Kč)</label>
+                <input type="number" id="gin-tonic" placeholder="">
+            </div>
+            <div class="form-group">
+                <label>Mojito (99 Kč)</label>
+                <input type="number" id="mojito" placeholder="">
+            </div>
+            <div class="form-group">
+                <label>Coca-Cola (32 Kč)</label>
+                <input type="number" id="coca-cola" placeholder="">
+            </div>
+            <div class="form-group">
+                <label>Sprite (32 Kč)</label>
+                <input type="number" id="sprite" placeholder="">
+            </div>
+            <div class="form-group">
+                <label>Red Bull (59 Kč)</label>
+                <input type="number" id="red-bull" placeholder="">
+            </div>
+            <div class="form-group">
+                <label>Prosecco (390 Kč)</label>
+                <input type="number" id="prosecco" placeholder="">
+            </div>
+
+            <div class="section-title">Položky v EUR</div>
+            <div class="form-group">
+                <label>Pivo sud 30l (125 €)</label>
+                <input type="number" id="pivo-sud-30l" placeholder="">
+            </div>
+            <div class="form-group">
+                <label>Pivo sud 50l (175 €)</label>
+                <input type="number" id="pivo-sud-50l" placeholder="">
+            </div>
+            <div class="form-group">
+                <label>Plyn (12 €)</label>
+                <input type="number" id="plyn" placeholder="">
+            </div>
+            <div class="form-group">
+                <label>Wellness (vlastní cena v €)</label>
+                <input type="number" id="wellness" placeholder="">
+            </div>
 
             <button class="btn" onclick="generateInvoice()">Generovat fakturu</button>
 
@@ -209,37 +255,3 @@
             const villa = document.getElementById('villa').value;
             const container = document.getElementById('appContainer');
             container.className = 'app-container villa-' + villa;
-        }
-
-        function generateInvoice() {
-            const pricesCZK = {
-                'Budvar': 59,
-                'Malibu': 99,
-                'Jack s colou': 99
-            };
-
-            let totalCZK = 0;
-            const invoiceItems = [];
-
-            for (const [item, price] of Object.entries(pricesCZK)) {
-                const inputId = item.toLowerCase().replace(/\s+/g, '-');
-                const quantity = parseInt(document.getElementById(inputId).value || 0);
-                if (quantity > 0) {
-                    const itemTotal = quantity * price;
-                    totalCZK += itemTotal;
-                    invoiceItems.push(`<div class="invoice-item"><span>${item}</span><span>${quantity} x ${price} Kč = ${itemTotal} Kč</span></div>`);
-                }
-            }
-
-            document.getElementById('invoice-items').innerHTML = invoiceItems.join('');
-            document.getElementById('invoice').style.display = 'block';
-        }
-
-        function printInvoice() {
-            window.print();
-        }
-
-        document.addEventListener('DOMContentLoaded', changeVillaStyle);
-    </script>
-</body>
-</html>

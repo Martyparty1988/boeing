@@ -194,15 +194,15 @@
             </div>
             <div class="form-group">
                 <label>Jack s colou (99 Kč)</label>
-                <input type="number" id="jack" min="0" value="0">
+                <input type="number" id="jack-s-colou" min="0" value="0">
             </div>
             <div class="form-group">
                 <label>Moscow Mule (99 Kč)</label>
-                <input type="number" id="moscow" min="0" value="0">
+                <input type="number" id="moscow-mule" min="0" value="0">
             </div>
             <div class="form-group">
                 <label>Gin-Tonic (99 Kč)</label>
-                <input type="number" id="gin" min="0" value="0">
+                <input type="number" id="gin-tonic" min="0" value="0">
             </div>
             <div class="form-group">
                 <label>Mojito (99 Kč)</label>
@@ -228,15 +228,15 @@
             <div class="section-title">Položky v EUR</div>
             <div class="form-group">
                 <label>Pivo sud 30l (125 €)</label>
-                <input type="number" id="beer-30" min="0" value="0">
+                <input type="number" id="pivo-sud-30l" min="0" value="0">
             </div>
             <div class="form-group">
                 <label>Pivo sud 50l (175 €)</label>
-                <input type="number" id="beer-50" min="0" value="0">
+                <input type="number" id="pivo-sud-50l" min="0" value="0">
             </div>
             <div class="form-group">
                 <label>Plyn (12 €)</label>
-                <input type="number" id="gas" min="0" value="0">
+                <input type="number" id="plyn" min="0" value="0">
             </div>
             <div class="form-group">
                 <label>Wellness (vlastní cena v €)</label>
@@ -246,129 +246,4 @@
             <button class="btn" onclick="generateInvoice()">Generovat fakturu</button>
 
             <div id="invoice" class="invoice" style="display:none;">
-                <h3>Faktura</h3>
-                <div id="invoice-items"></div>
-                <div id="invoice-totals" class="invoice-total"></div>
-                <button class="btn print-btn" onclick="printInvoice()">Tisk faktury</button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function changeVillaStyle() {
-            const villa = document.getElementById('villa').value;
-            const container = document.getElementById('appContainer');
-            container.className = 'app-container villa-' + villa;
-        }
-
-        function generateInvoice() {
-            const villa = document.getElementById('villa').value;
-            const villaNames = {
-                'oh-yeah': 'OH YEAH VILLA',
-                'little-castle': 'LITTLE CASTLE',
-                'amazing-pool': 'AMAZING POOL'
-            };
-            const selectedVillaName = villaNames[villa];
-
-            const currentDate = new Date().toLocaleDateString('cs-CZ', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric'
-            });
-
-            const exchangeRate = parseFloat(document.getElementById('exchange-rate').value) || 25;
-            const guests = parseInt(document.getElementById('guests').value) || 1;
-            const nights = parseInt(document.getElementById('nights').value) || 1;
-
-            const pricesCZK = {
-                'Budvar': 59,
-                'Malibu': 99,
-                'Jack s colou': 99,
-                'Moscow Mule': 99,
-                'Gin-Tonic': 99,
-                'Mojito': 99,
-                'Coca-Cola': 32,
-                'Sprite': 32,
-                'Red Bull': 59,
-                'Prosecco': 390
-            };
-
-            const pricesEUR = {
-                'Pivo sud 30l': 125,
-                'Pivo sud 50l': 175,
-                'Plyn': 12,
-                'Wellness': parseFloat(document.getElementById('wellness').value) || 0
-            };
-
-            let totalCZK = 0;
-            let totalEUR = 0;
-            const invoiceItems = [];
-
-            // Výpočet CZK položek
-            for (const [item, price] of Object.entries(pricesCZK)) {
-                const quantity = parseInt(document.getElementById(item.toLowerCase().replace(/\s+/g, '-')) ? 
-                    document.getElementById(item.toLowerCase().replace(/\s+/g, '-')).value : 0) || 0;
-                if (quantity > 0) {
-                    const itemTotal = quantity * price;
-                    totalCZK += itemTotal;
-                    invoiceItems.push(`<div class="invoice-item"><span>${item}</span><span>${quantity} x ${price} Kč = ${itemTotal} Kč</span></div>`);
-                }
-            }
-
-            // Výpočet EUR položek
-            for (const [item, price] of Object.entries(pricesEUR)) {
-                const quantity = parseInt(document.getElementById(item === 'Wellness' ? 'wellness' : item.toLowerCase().replace(/\s+/g, '-')) ? 
-                    document.getElementById(item === 'Wellness' ? 'wellness' : item.toLowerCase().replace(/\s+/g, '-')).value : 0) || 0;
-                if (quantity > 0) {
-                    const itemTotal = item === 'Wellness' ? quantity : quantity * price;
-                    totalEUR += itemTotal;
-                    invoiceItems.push(`<div class="invoice-item"><span>${item}</span><span>${quantity} x ${price} € = ${itemTotal} €</span></div>`);
-                }
-            }
-
-            // Výpočet City Tax
-            const cityTax = guests * nights * 2;
-            totalEUR += cityTax;
-            invoiceItems.push(`<div class="invoice-item"><span>City Tax</span><span>${guests} hostů x ${nights} nocí x 2 € = ${cityTax} €</span></div>`);
-
-            // Přepočet měn
-            const totalInCZK = totalCZK + (totalEUR * exchangeRate);
-            const totalInEUR = totalEUR + (totalCZK / exchangeRate);
-
-            // Zobrazení faktury
-            const invoiceItemsElement = document.getElementById('invoice-items');
-            const invoiceTotalsElement = document.getElementById('invoice-totals');
-
-            invoiceItemsElement.innerHTML = invoiceItems.join('');
-            invoiceTotalsElement.innerHTML = `
-                <div class="invoice-item">
-                    <strong>Datum faktury</strong>
-                    <strong>${currentDate}</strong>
-                </div>
-                <div class="invoice-item">
-                    <strong>Vila</strong>
-                    <strong>${selectedVillaName}</strong>
-                </div>
-                <div class="invoice-item">
-                    <strong>Celkem v CZK</strong>
-                    <strong>${totalInCZK.toFixed(2)} Kč</strong>
-                </div>
-                <div class="invoice-item">
-                    <strong>Celkem v EUR</strong>
-                    <strong>${totalInEUR.toFixed(2)} €</strong>
-                </div>
-            `;
-
-            document.getElementById('invoice').style.display = 'block';
-        }
-
-        function printInvoice() {
-            window.print();
-        }
-
-        // Initialize villa style on page load
-        document.addEventListener('DOMContentLoaded', changeVillaStyle);
-    </script>
-</body>
-</html>
-</antArtifact>
+                <h

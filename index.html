@@ -1,3 +1,4 @@
+<antArtifact identifier="minibar-management-app" type="text/html" title="K&D Minibar Management Kompletní Webová Aplikace">
 <!DOCTYPE html>
 <html lang="cs">
 <head>
@@ -143,6 +144,21 @@
             background: var(--secondary-color);
             margin-top: 10px;
         }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #invoice, #invoice * {
+                visibility: visible;
+            }
+            #invoice {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -156,7 +172,7 @@
 
         <div class="content">
             <div class="form-group">
-                <label>Výběr vily</label>
+                <label for="villa">Výběr vily</label>
                 <select id="villa" onchange="changeVillaStyle()">
                     <option value="oh-yeah">OH YEAH VILLA</option>
                     <option value="little-castle">LITTLE CASTLE</option>
@@ -165,77 +181,77 @@
             </div>
 
             <div class="form-group">
-                <label>Aktuální kurz CZK/EUR</label>
-                <input type="number" id="exchange-rate" placeholder="Zadejte kurz" step="0.1">
+                <label for="exchange-rate">Aktuální kurz CZK/EUR</label>
+                <input type="number" id="exchange-rate" placeholder="Zadejte kurz" step="0.1" required>
             </div>
 
             <div class="form-group">
-                <label>Počet hostů</label>
-                <input type="number" id="guests" placeholder="Počet hostů" min="1">
+                <label for="guests">Počet hostů</label>
+                <input type="number" id="guests" placeholder="Počet hostů" min="1" required>
             </div>
 
             <div class="form-group">
-                <label>Počet nocí</label>
-                <input type="number" id="nights" placeholder="Počet nocí" min="1">
+                <label for="nights">Počet nocí</label>
+                <input type="number" id="nights" placeholder="Počet nocí" min="1" required>
             </div>
 
             <div class="section-title">Položky v CZK</div>
             <div class="form-group">
-                <label>Budvar (59 Kč)</label>
+                <label for="budvar">Budvar (59 Kč)</label>
                 <input type="number" id="budvar" placeholder="">
             </div>
             <div class="form-group">
-                <label>Malibu (99 Kč)</label>
+                <label for="malibu">Malibu (99 Kč)</label>
                 <input type="number" id="malibu" placeholder="">
             </div>
             <div class="form-group">
-                <label>Jack s colou (99 Kč)</label>
+                <label for="jack-s-colou">Jack s colou (99 Kč)</label>
                 <input type="number" id="jack-s-colou" placeholder="">
             </div>
             <div class="form-group">
-                <label>Moscow Mule (99 Kč)</label>
+                <label for="moscow-mule">Moscow Mule (99 Kč)</label>
                 <input type="number" id="moscow-mule" placeholder="">
             </div>
             <div class="form-group">
-                <label>Gin-Tonic (99 Kč)</label>
+                <label for="gin-tonic">Gin-Tonic (99 Kč)</label>
                 <input type="number" id="gin-tonic" placeholder="">
             </div>
             <div class="form-group">
-                <label>Mojito (99 Kč)</label>
+                <label for="mojito">Mojito (99 Kč)</label>
                 <input type="number" id="mojito" placeholder="">
             </div>
             <div class="form-group">
-                <label>Coca-Cola (32 Kč)</label>
+                <label for="coca-cola">Coca-Cola (32 Kč)</label>
                 <input type="number" id="coca-cola" placeholder="">
             </div>
             <div class="form-group">
-                <label>Sprite (32 Kč)</label>
+                <label for="sprite">Sprite (32 Kč)</label>
                 <input type="number" id="sprite" placeholder="">
             </div>
             <div class="form-group">
-                <label>Red Bull (59 Kč)</label>
+                <label for="red-bull">Red Bull (59 Kč)</label>
                 <input type="number" id="red-bull" placeholder="">
             </div>
             <div class="form-group">
-                <label>Prosecco (390 Kč)</label>
+                <label for="prosecco">Prosecco (390 Kč)</label>
                 <input type="number" id="prosecco" placeholder="">
             </div>
 
             <div class="section-title">Položky v EUR</div>
             <div class="form-group">
-                <label>Pivo sud 30l (125 €)</label>
+                <label for="beer-30l">Pivo sud 30l (125 €)</label>
                 <input type="number" id="beer-30l" placeholder="">
             </div>
             <div class="form-group">
-                <label>Pivo sud 50l (175 €)</label>
+                <label for="beer-50l">Pivo sud 50l (175 €)</label>
                 <input type="number" id="beer-50l" placeholder="">
             </div>
             <div class="form-group">
-                <label>Plyn (12 €)</label>
+                <label for="gas">Plyn (12 €)</label>
                 <input type="number" id="gas" placeholder="">
             </div>
             <div class="form-group">
-                <label>Wellness (vlastní cena v €)</label>
+                <label for="wellness">Wellness (vlastní cena v €)</label>
                 <input type="number" id="wellness" placeholder="">
             </div>
 
@@ -251,3 +267,116 @@
     </div>
 
     <script>
+        function changeVillaStyle() {
+            const villa = document.getElementById('villa').value;
+            const villaColors = {
+                'oh-yeah': { primary: '#FF385C', secondary: '#00A699' },
+                'little-castle': { primary: '#4A90E2', secondary: '#50C878' },
+                'amazing-pool': { primary: '#FF6B6B', secondary: '#4ECDC4' }
+            };
+
+            const color = villaColors[villa];
+            document.documentElement.style.setProperty('--primary-color', color.primary);
+            document.documentElement.style.setProperty('--secondary-color', color.secondary);
+        }
+
+        function generateInvoice() {
+            const exchangeRate = parseFloat(document.getElementById('exchange-rate').value);
+            const guests = parseInt(document.getElementById('guests').value);
+            const nights = parseInt(document.getElementById('nights').value);
+
+            if (!exchangeRate || !guests || !nights) {
+                alert('Prosím vyplňte všechny povinné údaje.');
+                return;
+            }
+
+            const prices = {
+                'budvar': 59, 'malibu': 99, 'jack-s-colou': 99, 
+                'moscow-mule': 99, 'gin-tonic': 99, 'mojito': 99,
+                'coca-cola': 32, 'sprite': 32, 'red-bull': 59, 
+                'prosecco': 390,
+                'beer-30l': 125, 'beer-50l': 175, 'gas': 12
+            };
+
+            const items = [];
+            let totalCZK = 0;
+            let totalEUR = 0;
+
+            for (let item in prices) {
+                const quantity = parseInt(document.getElementById(item).value) || 0;
+                if (quantity > 0) {
+                    const price = item.includes('beer') || item === 'gas' ? quantity * prices[item] : quantity * prices[item];
+                    const itemTotal = item.includes('beer') || item === 'gas' ? price : price;
+                    
+                    if (item.includes('beer') || item === 'gas') {
+                        totalEUR += itemTotal;
+                        items.push({
+                            name: document.querySelector(`label[for="${item}"]`).textContent,
+                            quantity: quantity,
+                            priceEUR: prices[item],
+                            totalEUR: itemTotal
+                        });
+                    } else {
+                        totalCZK += itemTotal;
+                        items.push({
+                            name: document.querySelector(`label[for="${item}"]`).textContent,
+                            quantity: quantity,
+                            priceCZK: prices[item],
+                            totalCZK: itemTotal
+                        });
+                    }
+                }
+            }
+
+            const wellness = parseFloat(document.getElementById('wellness').value) || 0;
+            if (wellness > 0) {
+                totalEUR += wellness;
+                items.push({
+                    name: 'Wellness',
+                    quantity: 1,
+                    priceEUR: wellness,
+                    totalEUR: wellness
+                });
+            }
+
+            const invoiceElement = document.getElementById('invoice');
+            const invoiceItemsElement = document.getElementById('invoice-items');
+            const invoiceTotalsElement = document.getElementById('invoice-totals');
+
+            invoiceItemsElement.innerHTML = items.map(item => `
+                <div class="invoice-item">
+                    <span>${item.name} (${item.quantity}x)</span>
+                    <span>${item.priceCZK ? item.totalCZK + ' Kč' : item.totalEUR + ' €'}</span>
+                </div>
+            `).join('');
+
+            const totalInEUR = (totalCZK / exchangeRate) + totalEUR;
+            invoiceTotalsElement.innerHTML = `
+                <div>Celkem CZK: ${totalCZK.toFixed(2)} Kč</div>
+                <div>Celkem EUR: ${totalEUR.toFixed(2)} €</div>
+                <div>Celkem v EUR po přepočtu: ${totalInEUR.toFixed(2)} €</div>
+            `;
+
+            invoiceElement.style.display = 'block';
+        }
+
+        function printInvoice() {
+            const printContents = document.getElementById('invoice').innerHTML;
+            const originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+            
+            document.querySelector('.print-btn').addEventListener('click', printInvoice);
+            document.querySelector('button[onclick="generateInvoice()"]').addEventListener('click', generateInvoice);
+            document.getElementById('villa').addEventListener('change', changeVillaStyle);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            changeVillaStyle();
+        });
+    </script>
+</body>
+</html>
+</antArtifact>

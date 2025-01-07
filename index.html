@@ -2,79 +2,103 @@
 <html lang="cs">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>B737NG Guide</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Boeing 737NG - Interaktivní průvodce</h1>
-            <nav>
-                <button onclick="showSection('checklist')" class="active">Checklisty</button>
-                <button onclick="showSection('cockpit')">Kokpit</button>
-                <button onclick="showSection('emergency')">Nouzové postupy</button>
-                <button onclick="showSection('performance')">Výkony</button>
+            <h1>B737NG Guide</h1>
+            <nav class="mobile-nav">
+                <button onclick="showSection('cockpit')" class="nav-button">
+                    <span>Kokpit</span>
+                </button>
+                <button onclick="showSection('systems')" class="nav-button">
+                    <span>Systémy</span>
+                </button>
+                <button onclick="showSection('checklists')" class="nav-button">
+                    <span>Checklisty</span>
+                </button>
+                <button onclick="showSection('emergency')" class="nav-button emergency-btn">
+                    <span>Emergency</span>
+                </button>
             </nav>
         </header>
 
-        <main>
-            <!-- Checklist sekce -->
-            <section id="checklist" class="section active">
-                <div class="card">
-                    <h2>Předletová příprava</h2>
-                    <div class="checklist-items">
-                        <!-- Položky se doplní z JavaScriptu -->
-                    </div>
-                </div>
-            </section>
-
+        <main class="mobile-main">
             <!-- Kokpit sekce -->
-            <section id="cockpit" class="section">
-                <div class="card">
-                    <h2>Systémy kokpitu</h2>
-                    <div class="cockpit-view">
-                        <!-- Interaktivní prvky kokpitu se doplní z JavaScriptu -->
+            <section id="cockpit" class="section active">
+                <div class="section-menu">
+                    <button onclick="showSubSection('pilot-station')" class="submenu-btn active">Pilotní pracoviště</button>
+                    <button onclick="showSubSection('pedestal')" class="submenu-btn">Pedestal</button>
+                    <button onclick="showSubSection('overhead')" class="submenu-btn">Overhead Panel</button>
+                </div>
+                <div id="pilot-station" class="subsection active">
+                    <div class="mobile-card">
+                        <h3>Primary Flight Display (PFD)</h3>
+                        <div class="interactive-area pfd-area">
+                            <!-- Interaktivní oblasti se doplní z JS -->
+                        </div>
+                    </div>
+                    <div class="mobile-card">
+                        <h3>Navigation Display (ND)</h3>
+                        <div class="interactive-area nd-area">
+                            <!-- Interaktivní oblasti se doplní z JS -->
+                        </div>
+                    </div>
+                </div>
+                <div id="pedestal" class="subsection">
+                    <div class="mobile-card">
+                        <h3>FMC/CDU</h3>
+                        <div class="interactive-area fmc-area">
+                            <!-- Interaktivní oblasti se doplní z JS -->
+                        </div>
+                    </div>
+                    <div class="mobile-card">
+                        <h3>Thrust Controls</h3>
+                        <div class="interactive-area thrust-area">
+                            <!-- Interaktivní oblasti se doplní z JS -->
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Nouzové postupy -->
+            <!-- Systémy sekce -->
+            <section id="systems" class="section">
+                <div class="section-menu">
+                    <button onclick="showSubSection('electrical')" class="submenu-btn">Elektrický systém</button>
+                    <button onclick="showSubSection('hydraulic')" class="submenu-btn">Hydraulika</button>
+                    <button onclick="showSubSection('fuel')" class="submenu-btn">Palivový systém</button>
+                    <button onclick="showSubSection('pneumatic')" class="submenu-btn">Pneumatický systém</button>
+                </div>
+                <div class="system-content">
+                    <!-- Obsah systémů se doplní z JS -->
+                </div>
+            </section>
+
+            <!-- Checklisty sekce -->
+            <section id="checklists" class="section">
+                <div class="section-menu">
+                    <button onclick="showSubSection('normal')" class="submenu-btn">Normal</button>
+                    <button onclick="showSubSection('abnormal')" class="submenu-btn">Abnormal</button>
+                    <button onclick="showSubSection('supplementary')" class="submenu-btn">Supplementary</button>
+                </div>
+                <div class="checklist-content">
+                    <!-- Checklisty se doplní z JS -->
+                </div>
+            </section>
+
+            <!-- Emergency sekce -->
             <section id="emergency" class="section">
-                <div class="card emergency">
-                    <h2>Nouzové postupy</h2>
-                    <div class="emergency-procedures">
-                        <!-- Nouzové postupy se doplní z JavaScriptu -->
-                    </div>
+                <div class="section-menu">
+                    <button onclick="showSubSection('engine-failure')" class="submenu-btn emergency">Engine Failure</button>
+                    <button onclick="showSubSection('fire')" class="submenu-btn emergency">Fire</button>
+                    <button onclick="showSubSection('depressurization')" class="submenu-btn emergency">Depressurization</button>
+                    <button onclick="showSubSection('hydraulic-loss')" class="submenu-btn emergency">Hydraulic Loss</button>
                 </div>
-            </section>
-
-            <!-- Výkonnostní kalkulátor -->
-            <section id="performance" class="section">
-                <div class="card">
-                    <h2>Výkonnostní kalkulátor</h2>
-                    <form id="performance-form" class="performance-calculator">
-                        <div class="form-group">
-                            <label>Váha (kg):</label>
-                            <input type="number" id="weight" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Teplota (°C):</label>
-                            <input type="number" id="temp" required>
-                        </div>
-                        <div class="form-group">
-                            <label>QNH (hPa):</label>
-                            <input type="number" id="qnh" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Runway:</label>
-                            <input type="text" id="runway" required>
-                        </div>
-                        <button type="submit">Vypočítat</button>
-                    </form>
-                    <div id="performance-results" class="results hidden">
-                        <!-- Výsledky se doplní z JavaScriptu -->
-                    </div>
+                <div class="emergency-content">
+                    <!-- Emergency postupy se doplní z JS -->
                 </div>
             </section>
         </main>

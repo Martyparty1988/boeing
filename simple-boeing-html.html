@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B737NG Guide</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Boeing 737NG - Interaktivní průvodce</h1>
+            <nav>
+                <button onclick="showSection('checklist')" class="active">Checklisty</button>
+                <button onclick="showSection('cockpit')">Kokpit</button>
+                <button onclick="showSection('emergency')">Nouzové postupy</button>
+                <button onclick="showSection('performance')">Výkony</button>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Checklist sekce -->
+            <section id="checklist" class="section active">
+                <div class="card">
+                    <h2>Předletová příprava</h2>
+                    <div class="checklist-items">
+                        <!-- Položky se doplní z JavaScriptu -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Kokpit sekce -->
+            <section id="cockpit" class="section">
+                <div class="card">
+                    <h2>Systémy kokpitu</h2>
+                    <div class="cockpit-view">
+                        <!-- Interaktivní prvky kokpitu se doplní z JavaScriptu -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Nouzové postupy -->
+            <section id="emergency" class="section">
+                <div class="card emergency">
+                    <h2>Nouzové postupy</h2>
+                    <div class="emergency-procedures">
+                        <!-- Nouzové postupy se doplní z JavaScriptu -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Výkonnostní kalkulátor -->
+            <section id="performance" class="section">
+                <div class="card">
+                    <h2>Výkonnostní kalkulátor</h2>
+                    <form id="performance-form" class="performance-calculator">
+                        <div class="form-group">
+                            <label>Váha (kg):</label>
+                            <input type="number" id="weight" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Teplota (°C):</label>
+                            <input type="number" id="temp" required>
+                        </div>
+                        <div class="form-group">
+                            <label>QNH (hPa):</label>
+                            <input type="number" id="qnh" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Runway:</label>
+                            <input type="text" id="runway" required>
+                        </div>
+                        <button type="submit">Vypočítat</button>
+                    </form>
+                    <div id="performance-results" class="results hidden">
+                        <!-- Výsledky se doplní z JavaScriptu -->
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="boeing-library.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

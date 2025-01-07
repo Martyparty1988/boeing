@@ -1,61 +1,41 @@
-/* styles.css - Opravená verze */
+/* Základní reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #f2f2f7;
+    padding: 20px;
     line-height: 1.4;
-    background-color: #f2f2f7;
-    color: #1c1c1e;
-    -webkit-font-smoothing: antialiased;
 }
 
-/* Header a navigace */
-.top-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    background-color: rgba(242, 242, 247, 0.95);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    padding: 10px;
-}
-
-.main-title {
-    font-size: 24px;
-    font-weight: 600;
+/* Hlavička */
+h1 {
     text-align: center;
-    margin-bottom: 16px;
+    font-size: 24px;
+    margin-bottom: 20px;
 }
 
 /* Hlavní navigace */
 .nav-buttons {
     display: flex;
-    gap: 8px;
-    padding: 0 8px;
-    margin-bottom: 12px;
+    gap: 10px;
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .nav-button {
-    flex: 0 0 auto;
+    background: white;
+    border: none;
     padding: 12px 20px;
     border-radius: 20px;
     font-size: 15px;
-    font-weight: 500;
-    background: white;
+    white-space: nowrap;
     color: #007AFF;
-    border: none;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    scroll-snap-align: start;
 }
 
 .nav-button.active {
@@ -63,128 +43,66 @@ body {
     color: white;
 }
 
-/* Podsekce */
-.subsection-nav {
+/* Podnavigace */
+.sub-nav {
     display: flex;
-    gap: 8px;
-    padding: 8px;
-    margin: 0 -8px;
+    gap: 10px;
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
 }
 
-.subsection-button {
-    flex: 0 0 auto;
+.sub-button {
+    background: white;
+    border: none;
     padding: 8px 16px;
     border-radius: 16px;
     font-size: 14px;
-    background: white;
+    white-space: nowrap;
     color: #007AFF;
-    border: none;
 }
 
-.subsection-button.active {
+.sub-button.active {
     background: #007AFF;
     color: white;
 }
 
 /* Karty s obsahem */
-.content-card {
+.card {
     background: white;
     border-radius: 16px;
-    margin: 12px 8px;
     padding: 16px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 16px;
 }
 
-.card-title {
+.card h2 {
     font-size: 18px;
-    font-weight: 600;
     margin-bottom: 12px;
 }
 
-/* Interaktivní oblasti */
+/* Interaktivní oblast */
 .interactive-area {
     position: relative;
     height: 200px;
     background: #f5f5f7;
     border-radius: 12px;
     margin-top: 12px;
-    overflow: hidden;
 }
 
 .interactive-point {
     position: absolute;
     width: 44px;
     height: 44px;
-    transform: translate(-50%, -50%);
+    padding: 10px;
     cursor: pointer;
 }
 
 .point-dot {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     width: 12px;
     height: 12px;
     background: #007AFF;
     border-radius: 50%;
-    box-shadow: 0 0 0 4px rgba(0,122,255,0.2);
-}
-
-.point-label {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: max-content;
-    padding: 4px 8px;
-    margin-top: 4px;
-    background: rgba(0,0,0,0.7);
-    color: white;
-    font-size: 12px;
-    border-radius: 4px;
-    opacity: 0;
-    transition: opacity 0.2s;
-}
-
-.interactive-point:hover .point-label {
-    opacity: 1;
-}
-
-/* Modální okno */
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0,0,0,0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
-.modal.show {
-    opacity: 1;
-}
-
-.modal-content {
-    background: white;
-    border-radius: 16px;
-    width: 90%;
-    max-width: 340px;
-    padding: 20px;
-    transform: translateY(20px);
-    transition: transform 0.3s;
-}
-
-.modal.show .modal-content {
-    transform: translateY(0);
+    margin: auto;
 }
 
 /* Emergency sekce */
@@ -194,25 +112,16 @@ body {
 
 .emergency-button.active {
     background: #FF3B30;
-    color: white;
 }
 
-/* Responzivní design */
-@media (max-width: 340px) {
+/* Responzivní úpravy */
+@media (max-width: 360px) {
+    body {
+        padding: 10px;
+    }
+    
     .nav-button {
         padding: 10px 16px;
         font-size: 14px;
     }
-    
-    .subsection-button {
-        padding: 6px 12px;
-        font-size: 13px;
-    }
-}
-
-/* Animace */
-@keyframes pulse {
-    0% { transform: scale(1); opacity: 0.5; }
-    50% { transform: scale(1.2); opacity: 0.2; }
-    100% { transform: scale(1); opacity: 0.5; }
 }
